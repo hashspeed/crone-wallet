@@ -7,6 +7,10 @@
     "noEmit": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "strict": true
+    "strict": true,
+    "paths":{
+      "@crone/styles":["./src/styles"],
+      "@crone/routes":["./src/navigation/routesNames"]
+    }
   }
 }

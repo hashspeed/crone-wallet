@@ -3,61 +3,50 @@ import { css } from 'styled-components';
 import colors from './colors';
 import fonts from './fonts';
 
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
+type TextProps = {
+  color: string;
+  isEmoji: string;
+  family: string;
+  mono: string;
+  weight: string;
+  size: string;
+  letterSpacing: string;
+  lineHeight: string;
+  opacity: string;
+  tabularNums: string;
+  align: string;
+  uppercase: string;
+};
 
-function selectBestFontFit(mono, weight) {
-  if (weight) {
-    if (weight === 900) {
-      return 'Heavy';
-    }
-    if (weight >= 700) {
-      return 'Bold';
-    }
-    if (weight >= 500) {
-      return 'Semibold';
-    }
-    return weight <= 400
-      ? 'Regular'
-      : mono
-      ? 'Medium'
-      : capitalizeFirstLetter(weight);
-  } else {
-    return 'Regular';
-  }
-}
+// function capitalizeFirstLetter(string: any) {
+//   return string.charAt(0).toUpperCase() + string.slice(1);
+// }
 
-function familyFontWithAndroidWidth(weight, family, mono) {
-  return `${
-    fonts.family[
-      mono
-        ? `SFMono${android ? `-${selectBestFontFit(mono, weight)}` : ''}`
-        : family
-    ]
-  }${android ? `-${selectBestFontFit(mono, weight)}` : ''}`;
-}
+// function selectBestFontFit(mono: any, weight: any) {
+//   if (weight) {
+//     if (weight === 900) {
+//       return 'Heavy';
+//     }
+//     if (weight >= 700) {
+//       return 'Bold';
+//     }
+//     if (weight >= 500) {
+//       return 'Semibold';
+//     }
+//     return weight <= 400
+//       ? 'Regular'
+//       : mono
+//       ? 'Medium'
+//       : capitalizeFirstLetter(weight);
+//   } else {
+//     return 'Regular';
+//   }
+// }
 
-export function fontWithWidth(weight, family = 'SFProRounded', mono = false) {
-  return {
-    fontFamily: familyFontWithAndroidWidth(weight, family, mono),
-    // https://github.com/facebook/react-native/issues/18820
-    // https://www.youtube.com/watch?v=87rhZTumujw
-    ...(ios ? { fontWeight: weight } : { fontWeight: 'normal' }),
-  };
-}
-
-const buildTextStyles = css`
+const buildTextStyles = css<TextProps>`
   /* Color */
   color: ${({ color, theme }) =>
     colors.get(color, theme.colors) || theme.colors.dark};
-  /* Font Family */
-  ${({ isEmoji, family = 'SFProRounded', mono, weight }) => {
-    const t = isEmoji
-      ? ''
-      : `font-family: ${familyFontWithAndroidWidth(weight, family, mono)};`;
-    return t;
-  }}
   /* Font Size */
   font-size: ${({ size = 'medium' }) =>
     typeof size === 'number' ? size : get(fonts, `size[${size}]`, size)};

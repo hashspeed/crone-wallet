@@ -266,5 +266,4 @@ export default {
   get: getColorForString,
   getRandomColor,
   lightModeThemeColors,
-  propType: PropTypes.oneOf([...Object.keys(colors), ...Object.values(colors)]),
 };
